@@ -1,0 +1,28 @@
+#include "Adafruit_DHT.h"
+
+
+#define DHTPIN 2     // what pin we're connected to
+
+#define DHTTYPE DHT11		// DHT 11 
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+	dht.begin();
+}
+
+void loop() {
+// Wait a few seconds between measurements.
+	delay(30000);
+
+// Read temperature as Celsius
+	float temp = dht.getTempCelcius();
+	
+	if(String(temp) == "0.000000")
+	{
+	    return;
+	}
+	
+    Particle.publish("temp", String(temp), PRIVATE);
+    
+}
